@@ -3,11 +3,136 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Запечатанный конверт</title>
-    <link rel="stylesheet" href="css.css">
+    <title>Интерактивный конверт</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: #f0f0f0;
+            font-family: 'Times New Roman', serif;
+        }
+
+        .envelope {
+            position: relative;
+            width: 50vw;
+            height: 60vh;
+            background: #fff8f0;
+            border: 1px solid #d0d0d0;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+
+        .envelope.open {
+            transform: perspective(1000px) rotateX(10deg);
+        }
+
+        .envelope-flap {
+            position: absolute;
+            top: 0vh;
+            width: 0;
+            height: 0;
+            border-left: 25vw solid transparent;
+            border-right: 25vw solid transparent;
+            border-top: 27.5vh solid #f5e6d3;
+            z-index: 2;
+            transform-origin: top;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .wax-seal {
+            position: absolute;
+            top: -5vh;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 3.5vw;
+            height: 3.5vw;
+            min-width: 25px;
+            min-height: 25px;
+            background: #a52a2a;
+            border-radius: 50%;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+            z-index: 3;
+            transition: all 0.3s;
+        }
+
+        .stamp {
+            position: absolute;
+            left: 3%;
+            bottom: 5%;
+            width: 22%;
+            padding: 1.5%;
+            background: #f5f5f5;
+            border: 1px solid #ccc;
+            border-radius: 2px;
+            box-shadow: 1px 1px 3px rgba(0,0,0,0.1);
+            font-size: 1.2vw;
+            line-height: 1.3;
+            z-index: 1;
+        }
+
+        .letter-content {
+            position: absolute;
+            top: 20%;
+            left: 10%;
+            right: 10%;
+            bottom: 15%;
+            padding: 20px;
+            background: white;
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.5s;
+        }
+
+        .ministry, .title, .college, .specialty, .name {
+            font-size: inherit;
+            margin: 0.3vw 0;
+            color: #444;
+        }
+
+        .title {
+            text-decoration: underline;
+        }
+
+        .college, .specialty {
+            color: #666;
+        }
+
+        .name {
+            font-style: italic;
+            margin-top: 0.8vw;
+        }
+
+        .envelope.open .wax-seal {
+            opacity: 0;
+            transform: translateY(-20px);
+        }
+
+        .envelope.open .letter-content {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        @media (min-width: 1200px) {
+            .stamp {
+                font-size: 14px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .stamp {
+                font-size: 2vw;
+                width: 28%;
+            }
+        }
+    </style>
 </head>
 <body>
-    <div class="envelope">
+    <div class="envelope" onclick="toggleEnvelope()">
         <div class="envelope-flap">
             <div class="wax-seal"></div>
         </div>
@@ -18,6 +143,22 @@
             <p class="specialty">специальность 09.02.07<br>"Информационные системы и программирование"</p>
             <p class="name">Лежень Андрея Игоревича</p>
         </div>
+        <div class="letter-content">
+            <h2>Добро пожаловать в портфолио!</h2>
+            <p>Здесь будет размещена информация о ваших достижениях и проектах.</p>
+        </div>
     </div>
+
+    <script>
+        function toggleEnvelope() {
+            const envelope = document.querySelector('.envelope');
+            const flap = document.querySelector('.envelope-flap');
+            
+            envelope.classList.toggle('open');
+            flap.style.transform = envelope.classList.contains('open') 
+                ? 'rotateX(180deg)'
+                : 'rotateX(0deg)';
+        }
+    </script>
 </body>
 </html>
