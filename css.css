@@ -90,3 +90,43 @@ body {
         width: 28%;
     }
 }
+.envelope {
+    cursor: pointer;
+    transition: transform 0.3s;
+}
+
+.envelope.open {
+    transform: perspective(1000px) rotateX(10deg);
+}
+
+.envelope-flap {
+    transform-origin: top;
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.wax-seal {
+    transition: all 0.3s;
+}
+
+.envelope.open .wax-seal {
+    opacity: 0;
+    transform: translateY(-20px);
+}
+
+.letter-content {
+    position: absolute;
+    top: 20%;
+    left: 10%;
+    right: 10%;
+    bottom: 15%;
+    padding: 20px;
+    background: white;
+    opacity: 0;
+    transform: translateY(50px);
+    transition: all 0.5s;
+}
+
+.envelope.open .letter-content {
+    opacity: 1;
+    transform: translateY(0);
+}
